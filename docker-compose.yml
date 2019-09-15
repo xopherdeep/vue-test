@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+
+  node-service:
+    container_name: node-container
+    image: node-image
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+    # entrypoint: /var/www/docker/node/start.sh
+    volumes:
+      - ./:/var/www/html
+      - node_modules:/var/www/html/node_modules
+    ports:
+      - "8080:8080"
+    networks:
+      - default
+
+volumes:
+    node_modules:
