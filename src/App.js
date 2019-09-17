@@ -6,6 +6,7 @@ export default {
     HelloWorld
   },
   data: () => ({
+    snackbar: false,
     eyeColors: [
       {
         text: 'Green',
@@ -21,9 +22,9 @@ export default {
       }
     ]
   }),
-  computed: getComputed()
+  computed: getComputed(),
   // methods: getMethods(),
-  // watch: getWatched()
+  watch: getWatched()
 }
 
 function getComputed () {
@@ -65,13 +66,13 @@ function getComputed () {
 //   }
 // }
 //
-// function getWatched () {
-//   return {
-//     eyeColorFilter: function (eyeColor) {
-//       // this.filterUsers(eyeColor)
-//     },
-//     nameFilter: function (eyeColor) {
-//       // this.filterUsers(eyeColor)
-//     }
-//   }
-// }
+function getWatched () {
+  return {
+    sortAsc: showSnackbar,
+    eyeColorFilter: showSnackbar,
+    nameFilter: showSnackbar
+  }
+  function showSnackbar () {
+    this.snackbar = true
+  }
+}

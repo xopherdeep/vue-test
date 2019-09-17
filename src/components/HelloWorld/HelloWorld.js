@@ -1,5 +1,8 @@
 export default {
   name: 'HelloWorld',
+  data: {
+    snackbar: false
+  },
   computed: getComputed(),
   methods: getMethods(),
   created: onCreated,
@@ -16,11 +19,14 @@ function getComputed () {
     users: {
       get: function () {
         const vm = this
-        const users = vm.isFilterOn()
-          ? vm.$store.state.users.filter(vm.filterUsers)
-          : vm.$store.state.users
+        const sort = !vm.sortAsc ? vm.sortA : vm.sortD
+        let users = vm.$store.state.users || []
 
-        if (!vm.sortAsc) { users.sort((a, b) => (a.name > b.name) ? 1 : -1) } else { users.sort((a, b) => (a.name < b.name) ? 1 : -1) }
+        users = vm.isFilterOn()
+          ? users.filter(vm.filterUsers)
+          : users
+
+        users.sort(sort)
 
         return users
       }
@@ -57,7 +63,17 @@ function getMethods () {
     filterUsers,
     viewUser,
     saveUser,
+    sortA,
+    sortD,
     goHome
+  }
+
+  function sortA (a, b) {
+    return (a.name > b.name) ? 1 : -1
+  }
+
+  function sortD (a, b) {
+    return (a.name < b.name) ? 1 : -1
   }
 
   function isFilterOn () {
@@ -107,15 +123,17 @@ function onCreated () {
 }
 
 function onMounted () {
-  if (localStorage.nameFilter) {
-    this.$store.dispatch('SET_NAME_FILTER', localStorage.nameFilter)
-  }
+  if (localStorage) {
+    if (localStorage.nameFilter) {
+      this.$store.dispatch('SET_NAME_FILTER', localStorage.nameFilter)
+    }
 
-  if (localStorage.eyeColorFilter) {
-    this.$store.dispatch('SET_EYE_COLOR_FILTER', localStorage.eyeColorFilter)
-  }
+    if (localStorage.eyeColorFilter) {
+      this.$store.dispatch('SET_EYE_COLOR_FILTER', localStorage.eyeColorFilter)
+    }
 
-  if (localStorage.sortAsc) {
-    this.$store.dispatch('SET_SORT_ASC', localStorage.sortAsc)
+    if (localStorage.sortAsc) {
+      this.$store.dispatch('SET_SORT_ASC', localStorage.sortAsc)
+    }
   }
 }
