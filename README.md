@@ -17,7 +17,18 @@ Create a Vue App that allows the user to view a list of objects, sort/filter the
 - Should have reasonable test coverage (mocha or jest) which run inside the container
 - ✓ Should be visually appealing
 
-## Project setup
+## Docker Build Project 
+```
+docker-compose build
+```
+
+### Serve Project - default: localhost:8080 
+```
+docker-compose up
+```
+
+
+## Via npm
 ```
 npm install
 ```
